@@ -4,8 +4,9 @@ from decimal import Decimal, getcontext
 
 def solve(b, a, s, ct):
     getcontext().prec = 10
-    ls = [0 for i in range(len(b))]
-    for i in range(len(b)):
+    n = len(b)
+    ls = [0] * n
+    for i in range(n):
         ls[i] = float(Decimal(b[i]) - Decimal(s[i]))
 
 
