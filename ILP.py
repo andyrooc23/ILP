@@ -1,18 +1,20 @@
 import numpy.linalg
-from decimal import Decimal, getcontext
 import json
 
 
 def solve(b, a, s, ct):
     try:
-        getcontext().prec = 10
         n = len(b)
         ls = [0] * n
         for i in range(n):
-            ls[i] = float(Decimal(b[i]) - Decimal(s[i]))
-
+            ls[i] = b[i] - s[i]
+        print(ls)
         xvals = numpy.linalg.solve(a, ls)
 
+
+        # ainv = numpy.linalg.inv(a)
+        # multiply left side by inverse of a to find values of x and return
+        # xvals = numpy.dot(ainv, ls)
         if not isinstance(xvals[0], list):
             print("Verifying solution")
             print("True" if (numpy.dot(a, xvals) is b) else "False")
@@ -24,7 +26,7 @@ def solve(b, a, s, ct):
                 if numpy.dot(ct, xvals[j]) > numpy.dot(ct, biggest):
                     biggest = xvals[j]
             print("Verifying solution")
-            print("True" if (numpy.dot(a, xvals) is b)  else "False")
+            print("True" if (numpy.dot(a, xvals) is b) else "False")
             return biggest
 
 
@@ -35,7 +37,16 @@ def solve(b, a, s, ct):
 
 
 def main():
-    file = json.load(open('matrix3.json'))
+    # b = [5.0, 12.9, 2.0]
+    #
+    # a = [[3.2, 8.7, 5.9],
+    #      [2.4, 3.1, 1.1],
+    #      [9.7, 6.1, 0.3]]
+    #
+    # s = [3.7, 3.8, 1.0]
+    #
+    # ct = [8.2, 9.7, 1.1]
+    file = json.load(open('matrix2.json'))
     matrices = file['Matrix']
     a = matrices['a']
     b = matrices['b']
@@ -47,6 +58,7 @@ def main():
         out += str(num) + "   "
     print(out)
     print(str(numpy.dot(ct, answers)) + "   is the value of cT.X")
+
 
 
 if __name__ == '__main__':
