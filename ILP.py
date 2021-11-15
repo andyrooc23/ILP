@@ -1,4 +1,3 @@
-
 import numpy.linalg
 import json
 
